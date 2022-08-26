@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practice api</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Nunito:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@400;600&family=Poppins:wght@200;300;400;500&family=Ubuntu:wght@500&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="main">
+        <h1>Govind's <span>Recipes</span></h1>
+        <div id="header">
+            <input type="text" id="input" placeholder="enter recipes">
+            <button type="submit" id="submit"> submit</button>
+        </div>
+    </div>
+    <div>
+        <div id="container"></div>
+    </div>
+
+    <script>
+        var inputRecipe = document.getElementById("input");
+        var btn = document.getElementById("submit");
+        var container = document.getElementById("container");
+
+        btn.addEventListener("click", function (name) {
+            fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputRecipe.value}`)
+
+                .then(result => result.json())
+                .then(data => {
+
+                    let recipe = data["meals"];
+                    let mainmeal = recipe[0]
+
+                    recipe.map(mainmeal => {
+
+
+                        console.log(mainmeal);
+
+                        let result = `<div id="recipeview">
+                    
+                    <h1 class="title"> Recipes Name :- ${mainmeal.strMeal} </h1>
+                    <img src="${mainmeal.strMealThumb}">
+                    <p><span> Disciption :-</span> ${mainmeal.strInstructions} </p>
+
+
+                    </div>`
+
+                        container.innerHTML += result
+                    })
+                })
+
+
+        })
+
+    </script>
+</body>
+
+</html>
